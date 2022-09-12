@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { CustomError } from "../models/customError.model.js";
+import { CustomError } from "../models/customError.model";
 
 export function errorHandler(error: TypeError | CustomError, _req: Request, res: Response, _next: NextFunction) {
     console.log('\n Erro na API - Pego pelo "errorHandler"\n\nO Erro foi:\n' + error.message);

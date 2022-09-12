@@ -7,9 +7,9 @@ type SchemasTypes = keyof typeof schemas;
 
 function schemaValidator(whichSchema: SchemasTypes) {
 
-    return (req: Request, _res: Response, next: NextFunction) => {
+    return (_req: Request, res: Response, next: NextFunction) => {
 
-        const { error } = schemas[whichSchema].validate(req.body, { abortEarly: false });
+        const { error } = schemas[whichSchema].validate(res.locals.inputData, { abortEarly: false });
 
         if(error) {
             const errorMessage = error.details.map((detail: {message: string}) => detail.message);
