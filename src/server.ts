@@ -8,7 +8,7 @@ import 'express-async-errors';
 import router from './routes/index';
 
 //Error Handler
-//import { errorHandler } from './middlewares/errorHandler.middleware.js';
+import { errorHandler } from './middlewares/errorHandler.middleware';
 
 //Configs
 const server = express();
@@ -18,7 +18,7 @@ server.use(json());
 
 server.use(router);
 
-//server.use(errorHandler)
+server.use(errorHandler)
 
 const PORT = process.env.PORT || 5000;
 
