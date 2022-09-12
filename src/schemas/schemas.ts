@@ -1,8 +1,10 @@
 import { signin, signup } from "./auth.schema";
+import { registerCredential } from "./credential.schema"
 
 const schemas = {
     signin,
-    signup   
+    signup,
+    registerCredential   
 };
 
 export default schemas;
