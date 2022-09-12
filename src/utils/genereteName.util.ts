@@ -1,5 +1,5 @@
 export function randonMemeName() {
-    const firstPart = ["Seua, ", "Done, ", "Ao, ", "Menine, ", "Moçe, ", "Ei ", '', '', ''];
+    const firstPart = ["Senhore, ", "Done, ", "Menine, ", "Moçe, ", "Ei, ", '', '', ''];
     const midPart = ["Nel", "Adamas", "Hele", "Petru", "Dindi", "Lu", "Ca", "Fa", "Bi", "Zé", "Nhô", "Nhâ"];
     const lastPart = ["son", "sona", "no", "tora", "tor", "nho", "son", "nha", "na", "tus", "kio", "kia", ""];
 
