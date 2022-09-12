@@ -1,0 +1,4 @@
+node_modules/
+.wakatime-project
+package-lock.json
+.env
