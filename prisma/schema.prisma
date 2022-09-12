@@ -11,9 +11,26 @@ datasource db {
 }
 
 model User {
+  id          Int         @id @default(autoincrement())
+  email       String      @unique
+  password    String
+  name        String?
+  createdAt   DateTime    @default(now())
+  Credential  Credential[]
+
+  @@map("users")
+}
+
+model Credential {
   id        Int         @id @default(autoincrement())
-  email     String      @unique
+  title     String
+  url       String
+  login     String      @unique
   password  String
-  name      String?
+  userId    Int
   createdAt DateTime    @default(now())
+  User      User        @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+  @@map("credentials")
 }
