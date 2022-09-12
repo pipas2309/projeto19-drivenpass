@@ -11,12 +11,16 @@ datasource db {
 }
 
 model User {
-  id          Int         @id @default(autoincrement())
-  email       String      @unique
+  id          Int           @id @default(autoincrement())
+  email       String        @unique
   password    String
   name        String?
-  createdAt   DateTime    @default(now())
-  Credential  Credential[]
+  createdAt   DateTime      @default(now())
+  Credentials Credential[]
+  Notes       SafeNote[]
+  Cards       Card[]
+  Wifis       Wifi[]
+
 
   @@map("users")
 }
@@ -34,3 +38,40 @@ model Credential {
   @@unique([userId, title])
   @@map("credentials")
 }
+
+model SafeNote {
+  id        Int         @id @default(autoincrement())
+  title     String      @db.VarChar(50)
+  text      String      @db.VarChar(1000)
+  userId    Int
+  createdAt DateTime    @default(now())
+  User      User        @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+  @@map("safenotes")
+}
+
+model Card {
+  id        Int         @id @default(autoincrement())
+  title     String      @db.VarChar(50)
+  text      String      @db.VarChar(1000)
+  userId    Int
+  createdAt DateTime    @default(now())
+  User      User        @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+  @@map("cards")
+}
+
+model Wifi {
+  id        Int         @id @default(autoincrement())
+  title     String      @db.VarChar(50)
+  text      String      @db.VarChar(1000)
+  userId    Int
+  createdAt DateTime    @default(now())
+  User      User        @relation(fields: [userId], references: [id])
+
+  @@unique([userId, title])
+  @@map("wifis")
+}
+
