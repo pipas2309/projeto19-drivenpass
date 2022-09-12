@@ -4,7 +4,7 @@ import { joiPasswordExtendCore } from 'joi-password';
 const JoiPassword = Joi.extend(joiPasswordExtendCore);
 
 export const signup = Joi.object({
-    name: Joi.string().min(3).max(128),
+    name: Joi.string().min(3).max(32),
     email: Joi.string().trim().email().required(),
     password: JoiPassword
         .string()
@@ -25,7 +25,8 @@ export const signup = Joi.object({
             'password.min': '{#label} precisa ter ao menos {#min} caracteres',
             'password.max': '{#label} precisa ter no máximo {#max} caracteres',
       })
-        .required()
+        .required(),
+        confirmPassword: Joi.any().valid(Joi.ref('password')).required()
 });
 
 export const signin = Joi.object({
