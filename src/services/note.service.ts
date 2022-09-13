@@ -4,7 +4,8 @@ import * as noteRepository from '../repositories/note.repository';
 import { CustomError } from '../models/customError.model';
 
 import { decrypt, encrypt } from '../utils/encrypt.util';
-import { INote, INoteNoId, INoteNoUserId } from '../interfaces/note.interface';
+import { INoteNoUserId } from '../interfaces/note.interface';
+import { SafeNote } from '@prisma/client';
 
 
 export async function newNote(title: string, text: string, userId: number) {
@@ -35,7 +36,7 @@ export async function allNotes(userId: number): Promise<INoteNoUserId[]> {
     })
 }
 
-export async function getNoteById(id: number, userId: number) {
+export async function getNoteById(id: number, userId: number): Promise<SafeNote> {
     const note = await noteRepository.findById(id);
 
     if(!note) {
@@ -54,7 +55,7 @@ export async function getNoteById(id: number, userId: number) {
             );
     }
 
-    const decryptText = decrypt(note.text);
+    const decryptText: string = decrypt(note.text);
 
     return { ...note, text: decryptText }
 }

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { INote, INoteNoUserId } from '../interfaces/note.interface';
+import { INote } from '../interfaces/note.interface';
 
 import * as noteService from '../services/note.service';
 
