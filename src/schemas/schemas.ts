@@ -3,6 +3,7 @@ import { registerCredential } from "./credential.schema"
 import { registerNote } from "./note.schema"
 import { registerCard } from "./card.schema"
 import { registerWifi } from "./wifi.schema"
+import { registerDocument } from "./document.schema"
 
 
 const schemas = {
@@ -11,7 +12,8 @@ const schemas = {
     registerCredential,
     registerNote,
     registerCard,
-    registerWifi
+    registerWifi,
+    registerDocument
 };
 
 export default schemas;
