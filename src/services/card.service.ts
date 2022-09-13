@@ -41,7 +41,7 @@ export async function getCardById(id: number, userId: number): Promise<Card> {
 
     if (!card) {
         throw new CustomError(
-            `Nota Segura não existe!`,
+            `Cartão não existe!`,
             404,
             `Infelizmente não temos o papelzim com os números da mega...`
         );
@@ -49,7 +49,7 @@ export async function getCardById(id: number, userId: number): Promise<Card> {
 
     if (card?.userId !== userId) {
         throw new CustomError(
-            `Nota Segura não pertence ao usuário!`,
+            `Cartão não pertence ao usuário!`,
             406,
             `Então... tu mexe com tuas coisas e eu com as minhas... pode C? ò-ó`
         );
@@ -63,7 +63,7 @@ export async function deleteCard(id: number, userId: number) {
 
     if (!card) {
         throw new CustomError(
-            `Nota Segura não existe!`,
+            `Cartão não existe!`,
             404,
             `Infelizmente não temos o papelzim com os números da mega...`
         );
@@ -71,7 +71,7 @@ export async function deleteCard(id: number, userId: number) {
 
     if (card?.userId !== userId) {
         throw new CustomError(
-            `Nota Segura não pertence ao usuário!`,
+            `Cartão não pertence ao usuário!`,
             406,
             `Então... tu mexe com tuas coisas e eu com as minhas... pode C? ò-ó`
         );
