@@ -1,7 +1,7 @@
 import { prisma } from "../config/database";
 
 export async function findByUserIdAndTitle(userId: number, title: string) {
-    return await prisma.credential.findUnique({
+    return await prisma.safeNote.findUnique({
         where: { 
             userId_title: {
                 userId,
@@ -11,14 +11,14 @@ export async function findByUserIdAndTitle(userId: number, title: string) {
     });
 }
 
-export async function insert(url: string, title: string, login: string, password: string, userId: number) {
-    return await prisma.credential.create({
-        data: { url, title, login, password, userId }
+export async function insert(title: string, text: string, userId: number) {
+    return await prisma.safeNote.create({
+        data: { title, text, userId }
     });
 }
 
 export async function findAll(userId: number) {
-    return await prisma.credential.findMany({
+    return await prisma.safeNote.findMany({
         where: { 
             userId
         }
@@ -26,15 +26,15 @@ export async function findAll(userId: number) {
 }
 
 export async function findById(id: number) {
-    return await prisma.credential.findUnique({
+    return await prisma.safeNote.findUnique({
         where: {
             id
         }
     });
 }
 
-export async function deleteCredential(id: number) {
-    return await prisma.credential.delete({
+export async function deleteNote(id: number) {
+    return await prisma.safeNote.delete({
         where: {
             id
         }

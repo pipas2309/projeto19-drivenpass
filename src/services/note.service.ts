@@ -1,13 +1,14 @@
 
-import * as credentialRepository from '../repositories/credential.repository';
+import * as noteRepository from '../repositories/note.repository';
 
 import { CustomError } from '../models/customError.model';
 
 import { decrypt, encrypt } from '../utils/encrypt.util';
+import { INote, INoteNoId, INoteNoUserId } from '../interfaces/note.interface';
 
 
-export async function newCredential(url: string, title: string, login: string, password: string, userId: number) {
-    const duplicateTitle = await credentialRepository.findByUserIdAndTitle(userId, title);
+export async function newNote(title: string, text: string, userId: number) {
+    const duplicateTitle = await noteRepository.findByUserIdAndTitle(userId, title);
 
     if(duplicateTitle) {
         throw new CustomError(
@@ -17,67 +18,65 @@ export async function newCredential(url: string, title: string, login: string, p
             );
     }
 
-    const encryptPassword = await encrypt(password);
+    const encryptText = await encrypt(text);
 
-    await credentialRepository.insert(url, title, login, encryptPassword, userId);
+    await noteRepository.insert(title, encryptText, userId);
 }
 
-export async function allCredential(userId: number) {
-    const credentials = await credentialRepository.findAll(userId);
+export async function allNotes(userId: number): Promise<INoteNoUserId[]> {
+    const notes = await noteRepository.findAll(userId);
 
-    return credentials.map( (credential) => {
+    return notes.map( (note) => {
         return {
-            id: credential.id,
-            url: credential.url,
-            title: credential.title,
-            login: credential.login,
-            password: decrypt(credential.password),
+            id: note.id,
+            title: note.title,
+            text: decrypt(note.text),
         }
     })
 }
 
-export async function getCredentialById(id: number, userId: number) {
-    const credential = await credentialRepository.findById(id);
+export async function getNoteById(id: number, userId: number) {
+    const note = await noteRepository.findById(id);
 
-    if(!credential) {
+    if(!note) {
         throw new CustomError(
-            `Credencial não existe!`, 
+            `Nota Segura não existe!`, 
             404, 
-            `A senha da lampada mágica, você conhece o site?`
+            `Infelizmente não temos o papelzim com os números da mega...`
             );
     }
 
-    if(credential?.userId !== userId) {
+    if(note?.userId !== userId) {
         throw new CustomError(
-            `Credencial não pertence ao usuário!`, 
+            `Nota Segura não pertence ao usuário!`, 
             406, 
             `Então... tu mexe com tuas coisas e eu com as minhas... pode C? ò-ó`
             );
     }
 
-    const decryptPassword = decrypt(credential.password);
+    const decryptText = decrypt(note.text);
 
-    return { ...credential, password: decryptPassword }
+    return { ...note, text: decryptText }
 }
 
-export async function deleteCredential(id: number, userId: number) {
-    const credential = await credentialRepository.findById(id);
+export async function deleteNote(id: number, userId: number) {
+    const note = await noteRepository.findById(id);
 
-    if(!credential) {
+    if(!note) {
         throw new CustomError(
-            `Credencial não existe!`, 
+            `Nota Segura não existe!`, 
             404, 
-            `A senha da lampada mágica, você conhece o site?`
+            `Infelizmente não temos o papelzim com os números da mega...`
             );
     }
 
-    if(credential?.userId !== userId) {
+    if(note?.userId !== userId) {
         throw new CustomError(
-            `Credencial não pertence ao usuário!`, 
+            `Nota Segura não pertence ao usuário!`, 
             406, 
             `Então... tu mexe com tuas coisas e eu com as minhas... pode C? ò-ó`
             );
     }
 
-    await credentialRepository.deleteCredential(id);
+    await noteRepository.deleteNote(id);
 }

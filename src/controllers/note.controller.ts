@@ -1,42 +1,42 @@
 import { Request, Response } from 'express';
 
-import { ICredentialNoUserId } from '../interfaces/credential.interface';
+import { INote, INoteNoUserId } from '../interfaces/note.interface';
 
-import * as credentialService from '../services/credential.service';
+import * as noteService from '../services/note.service';
 
 
-export async function createCredential(req: Request, res: Response) {
-    const { url, title, login, password }: ICredentialNoUserId = req.body;
+export async function createNote(req: Request, res: Response) {
+    const { title, text }: INote = req.body;
 
     const { userId } = res.locals;
 
-    await credentialService.newCredential(url, title, login, password, userId.userId);
+    await noteService.newNote(title, text, userId.userId);
 
     res.sendStatus(202);
 }
 
-export async function getAllCredentials(req: Request, res: Response) {
+export async function getAllNotes(req: Request, res: Response) {
     const { userId } = res.locals;
 
-    const credentials = await credentialService.allCredential(userId.userId);
+    const notes = await noteService.allNotes(userId.userId);
 
-    res.status(200).send(credentials);
+    res.status(200).send(notes);
 }
 
-export async function specificCredentials(req: Request, res: Response) {
+export async function specificNote(req: Request, res: Response) {
     const { userId } = res.locals;
     const { id } = req.params;
 
-    const credential = await credentialService.getCredentialById(parseInt(id), userId.userId);
+    const note = await noteService.getNoteById(parseInt(id), userId.userId);
 
-    res.status(200).send(credential);
+    res.status(200).send(note);
 }
 
-export async function deleteCredential(req: Request, res: Response) {
+export async function deleteNote(req: Request, res: Response) {
     const { userId } = res.locals;
     const { id } = req.params;
 
-    await credentialService.deleteCredential(parseInt(id), userId.userId);
+    await noteService.deleteNote(parseInt(id), userId.userId);
 
     res.sendStatus(202);
 }

@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import { createCredential, deleteCredential, getAllCredentials, specificCredentials } from "../controllers/credential.controller";
+import { createNote, deleteNote, getAllNotes, specificNote } from "../controllers/note.controller";
 
 import schemaValidator from "../middlewares/schemaValidator.middleware";
 import tokenValidator from "../middlewares/tokenValidator.middleware";
@@ -9,13 +9,13 @@ import tokenValidator from "../middlewares/tokenValidator.middleware";
 const router = Router();
 
 
-router.post("/credential/register", tokenValidator, schemaValidator('registerCredential'), createCredential);
-router.get("/credential/", tokenValidator, getAllCredentials,);
+router.post("/safenote/register", tokenValidator, schemaValidator('registerNote'), createNote);
+router.get("/safenotes", tokenValidator, getAllNotes,);
 
 router
-        .route("/credential/:id")
-        .get(tokenValidator, specificCredentials)
-        .delete(tokenValidator, deleteCredential);
+        .route("/safenote/:id")
+        .get(tokenValidator, specificNote)
+        .delete(tokenValidator, deleteNote);
 
 
 export default router;
